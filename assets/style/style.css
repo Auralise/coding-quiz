@@ -135,3 +135,15 @@ footer {
 }
 
 
+/* Quiz list styles */
+.display-card .quiz-list {
+    list-style: none;
+}
+
+.display-card .quiz-list>li {
+    
+}
+
+#score-table {
+    margin: 1em 0;
+}
