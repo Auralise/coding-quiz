@@ -1,24 +1,35 @@
 :root {
+    /* buttons */
     --button-color-correct: rgb(59, 172, 59);
     --button-color-wrong: rgb(240, 74, 74);
     --button-color: rgb(161, 12, 129);
     --button-text-color: #ddd;
-    --display-width: 80%;
 
+    /* timer  */
+    --timer-color: #000;
+    --timer-low: red;
+
+    /* layout standards  */
+    --display-width: 60%;
+
+    /* links  */
     --link-text-color: rgb(157, 47, 230);
     --followed-link-color: rgb(230, 47, 148);
     --link-hover-color: rgb(255, 0, 221);
 }
 
 * {
-    font-size: 15px;
+    font-size: 18px;
     font-family: 'Source Sans Pro', sans-serif;
 }
 
 h1 {
     font-size: 200%;
+    margin: 0.5em 0;
+
 }
 
+/* Anchor Styles - Standard, visited and hover */
 a {
     color: var(--link-text-color);
 }
@@ -31,8 +42,11 @@ a:hover {
     color: var(--link-hover-color);
 }
 
+/* Header style */
+
 header {
     width: 100%; 
+    padding-top: 1vh;
 }
 
 .header-content {
@@ -40,10 +54,84 @@ header {
     width: var(--display-width);
     margin: auto;
     justify-content: space-between;
+    font-size: 150%;
 }
 
 .header-content>a {
-    font-size: 200%;
     text-decoration: none;
-    
+    font-size: inherit;
 }
+
+.timer-text {
+    font-size: inherit;
+}
+
+.timer-low {
+    color: var(--timer-low);
+}
+
+
+/* center card styles */
+.display-card {
+    width: var(--display-width);
+    margin: 10vh auto;
+}
+
+.display-card>h2 {
+    font-size: 150%;
+    text-align: left;
+    margin: 0.5em 0;
+}
+
+.display-card>p {
+    text-align: left;
+    line-height: 1.5em;
+    margin: 0.5em 0;
+    /* padding-left: 5px; */
+}
+
+
+
+/* button styles */
+button:hover {
+    cursor: pointer;
+}
+
+.standard-button {
+    padding: 5px;
+    background-color: var(--button-color);
+    color: var(--button-text-color);
+    border-radius: 8px;
+    border: none;
+}
+
+.correct {
+    background-color: var(--button-color-correct);
+}
+
+.wrong {
+    background-color: var(--button-color-wrong);
+}
+
+/* link buttons */
+
+.button-link {
+    text-decoration: none;
+    color: var(--button-text-color);
+}
+
+
+footer {
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+footer {
+    width: var(--display-width);
+    margin: auto;
+    padding: 2rem 0;
+}
+
+

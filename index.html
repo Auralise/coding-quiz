@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <head>
 
     <title>Coding Quiz</title>
@@ -12,7 +13,8 @@
     <!-- Font preload - sourced from google fonts https://fonts.google.com/specimen/Source+Sans+Pro -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="./assets/style/reset.css">
     <link rel="stylesheet" href="./assets/style/style.css">
@@ -22,18 +24,26 @@
 
     <header>
         <div class="header-content">
-            <h1>Coding Quiz</h1>
             <a href="./highscore.html" title="View Highscores">View Highscores</a>
-            <span class="timer-text">Time: 60</span>
+            <span class="timer-text timer-low">Time remaining: 60</span>
         </div>
-    </header> 
+    </header>
 
     <main>
         <section id="quiz-card" class="display-card">
-            <h2 class="quiz-heading">Coding Quiz Challenge</h2>
-            <p class="quiz-description">In this quiz, you will be asked 5 questions about Javascript fundamentals. If you answer the question correctly, you will be presented with the next question. If you answer the question incorrectly, you will be presented with the next question and some time will be deducted from the clock.<br>Your score is equal to the time left on the clock.<br>GOOD LUCK!!!</p>
-            <button id="start-button" class="standard-button ">Click to Begin!</button>
+            <h1 class="quiz-heading">Coding Quiz Challenge</h1>
+            <p class="quiz-description">In this quiz, you will be asked 5 questions about Javascript fundamentals. If
+                you answer the question correctly, you will be presented with the next question. If you answer the
+                question incorrectly, you will be presented with the next question and some time will be deducted from
+                the clock.<br>Your score is equal to the time left on the clock but beware, you will lose if the time
+                runs out!<br>GOOD LUCK!!!</p>
+            <button id="start-button" class="standard-button">Click to Begin!</button>
         </section>
     </main>
-    <script defer src="./assets/script/script.js"></script>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; James Prince <span id="copyDate">2022</span></p>
+        </div>
+    </footer>
+    <script defer src="./assets/script/quiz.js"></script>
 </body>
