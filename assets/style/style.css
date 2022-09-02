@@ -1,0 +1,49 @@
+:root {
+    --button-color-correct: rgb(59, 172, 59);
+    --button-color-wrong: rgb(240, 74, 74);
+    --button-color: rgb(161, 12, 129);
+    --button-text-color: #ddd;
+    --display-width: 80%;
+
+    --link-text-color: rgb(157, 47, 230);
+    --followed-link-color: rgb(230, 47, 148);
+    --link-hover-color: rgb(255, 0, 221);
+}
+
+* {
+    font-size: 15px;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+h1 {
+    font-size: 200%;
+}
+
+a {
+    color: var(--link-text-color);
+}
+
+a:visited {
+    color: var(--followed-link-color);
+}
+
+a:hover {
+    color: var(--link-hover-color);
+}
+
+header {
+    width: 100%; 
+}
+
+.header-content {
+    display: flex;
+    width: var(--display-width);
+    margin: auto;
+    justify-content: space-between;
+}
+
+.header-content>a {
+    font-size: 200%;
+    text-decoration: none;
+    
+}
