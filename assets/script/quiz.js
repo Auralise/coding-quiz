@@ -249,6 +249,24 @@ async function startQuiz() {
         if (event.target.matches('.answer') && !gAnswered) {
             gAnswered = true;
             answerIndex = event.target.getAttribute('data-index');
+            let buttons = document.querySelectorAll('.answer');
+            
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.add('answered');
+            }
+
+            let output = document.createElement('div');
+            quizCard.appendChild(output);
+
+            if (parseInt(questions[questionIndex].correctIndex) === parseInt(answerIndex)) {
+                output.innerHTML = `<br> <hr> <h3 class='successful'>Correct!</h3>`;
+            } else {
+                output.innerHTML = `<br> <hr> <h3 class='unsuccessful'>Wrong!</h3>`;
+                timer -= 10;
+            }            
+
+
+            
         }
         else {
             console.error('Something went wrong when choosing an answer');
@@ -265,19 +283,9 @@ async function startQuiz() {
         }
         
         if (gAnswered) {
-            let output = document.createElement('div');
-            quizCard.appendChild(output);
 
-            let buttons = document.querySelectorAll('.answer');
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].classList.add('answered');
-            }
-            if (parseInt(questions[questionIndex].correctIndex) === parseInt(answerIndex)) {
-                output.innerHTML = `<br> <hr> <h3 class='successful'>Correct!</h3>`;
-            } else {
-                output.innerHTML = `<br> <hr> <h3 class='unsuccessful'>Wrong!</h3>`;
-                timer -= 10;
-            }
+
+
 
             gAnswered = false;
             questionIndex++;
