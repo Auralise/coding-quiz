@@ -275,29 +275,30 @@ async function startQuiz() {
 
     printQuestion(questions[questionIndex]);
 
-    let timer = setInterval(() => {
+    let gameLoop = setInterval(() => {
 
 
         if (gTimer < 10 && !timerDisplay.classList.contains('timer-low')) {
             timerDisplay.classList.add('timer-low');
         }
         
-        if (gAnswered) {
-
-
-
+        if (gTimer === 0)
+        {
+            clearInterval(gameLoop);
+            addGeneralListener();
+            printSaveScreen(gTimer);
+        }
+        else if (gAnswered) {
 
             gAnswered = false;
             questionIndex++;
 
             if(questionIndex > questions.length - 1){
-                clearInterval(timer);
+                clearInterval(gameLoop);
                 addGeneralListener();
                 printSaveScreen(gTimer);
             } else {
-                setTimeout(()=> {
-                    printQuestion(questions[questionIndex]);
-                }, 1000)
+                printQuestion(questions[questionIndex]);
             }
 
         }
