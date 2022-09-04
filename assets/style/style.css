@@ -122,6 +122,11 @@ button:hover {
     color: var(--button-color-wrong);
 }
 
+/* if question has been answered */
+.answered { 
+    opacity: 0.5;
+}
+
 /* link buttons */
 
 .button-link {
