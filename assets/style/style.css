@@ -99,6 +99,7 @@ button:hover {
 
 .standard-button {
     padding: 5px;
+    margin: 5px;
     background-color: var(--button-color);
     color: var(--button-text-color);
     border-radius: 8px;
@@ -111,6 +112,14 @@ button:hover {
 
 .wrong {
     background-color: var(--button-color-wrong);
+}
+
+.successful {
+    color: var(--button-color-correct);
+}
+
+.unsuccessful {
+    color: var(--button-color-wrong);
 }
 
 /* link buttons */
@@ -144,6 +153,15 @@ footer {
     
 }
 
+/* Utility classes */
+.hidden {
+    visibility: hidden;
+}
+
+
+
+
 #score-table {
     margin: 1em 0;
 }
+
