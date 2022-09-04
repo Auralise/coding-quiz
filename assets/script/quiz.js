@@ -1,11 +1,4 @@
-// game states
-var answered = false;
-var win = false;
-var gTimer = 60;
-var gSaved = false;
 
-var quizCard = document.querySelector('#quiz-card');
-//var startButton = document.querySelector('#start-button');
 
 var results = {
     scores: []
@@ -277,10 +270,12 @@ function startQuiz() {
 }
 
 
+// game states
+var gAnswered = false;
+var gTimer = 60;
+var gSaved = false;
 
-
-
-
+var quizCard = document.querySelector('#quiz-card');
 
 
 quizCard.addEventListener('click', (event)=> {
@@ -292,7 +287,7 @@ quizCard.addEventListener('click', (event)=> {
         printSaveScreen(gTimer);
     }
     
-    if (event.target.matches('.answer') && !answered) {
+    if (event.target.matches('.answer') && !gAnswered) {
 
     }
     
