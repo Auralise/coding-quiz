@@ -29,6 +29,24 @@ h1 {
 
 }
 
+h2 {
+    font-size: 150%;
+    margin: 0.5em 0;
+}
+
+h3 {
+    margin: 0.5em 0;
+}
+
+#score-table li {
+    padding: 0.3em;
+    background-color:  rgb(236, 120, 236);
+}
+
+#score-table li:nth-child(even){
+    background-color: rgb(238, 163, 238);
+}
+
 /* Anchor Styles - Standard, visited and hover */
 a {
     color: var(--link-text-color);
@@ -154,9 +172,6 @@ footer {
     list-style: none;
 }
 
-.display-card .quiz-list>li {
-    
-}
 
 /* Utility classes */
 .hidden {
