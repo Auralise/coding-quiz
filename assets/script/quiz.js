@@ -27,7 +27,7 @@ function updateTimerDisplay(timerValue){
 
 //select a random set of questions from the available options
 function selectQuestions(amount) {
-    //create a deep copy of all possible questions
+    //create a deep copy of all possible questions to allow for exclusion of repeats
     let questions = JSON.parse(JSON.stringify(quiz.questions));
 
     //declare variables to be used in loop
@@ -48,7 +48,7 @@ function selectQuestions(amount) {
 
         selectedQuestions.push(questions[questionIndex])
 
-        //if not repeats then remove question from array
+        //if repeats not allowed then remove selected question from array
         if (!repeatsAllowed) {
             questions.splice(questionIndex, 1)
         }
@@ -62,15 +62,23 @@ function selectQuestions(amount) {
 //Take in a question object and print the question based on constituent elements
 function printQuestion(question) {
 
-    clearElement(quizCard); // Clear the quiz display
+    // Clear the quiz display 
+    clearElement(quizCard); 
+
     if (question.hasOwnProperty('text') && question.hasOwnProperty('answers')) {
+        
+        //Create elements required for printing the question
+        //Wrapper div to simplify handling of multiple elements
         let questionWrapper = document.createElement('div');
         let questionText = document.createElement('h2');
         let answerList = document.createElement('ul');
 
         questionWrapper.setAttribute('id', 'question-wrapper');
 
+        //set the question h2 element to the text value of the question
         questionText.textContent = question.text;
+        
+        //iterate and create a list of buttons with the appropriate attributes and append to the list
         for (let i = 0; i < question.answers.length; i++) {
             let answer = document.createElement('li');
             answer.innerHTML = `<button class="standard-button answer" data-index='${i}'>${question.answers[i]}</button>`
@@ -78,14 +86,19 @@ function printQuestion(question) {
 
         }
 
+        //append child elements to the wrapper div
         questionWrapper.appendChild(questionText);
         questionWrapper.appendChild(answerList);
+
+        //append wrapper div to the display box.
         quizCard.appendChild(questionWrapper);
 
     }
     else {
+        //If question object does not have the required attributes
         let errorText = document.createElement('h2');
         errorText.textContent = "Failed to print question";
+        console.error('Failed to print question')
         quizCard.appendChild(errorText);
     }
 
@@ -93,17 +106,21 @@ function printQuestion(question) {
 
 }
 
+//function to print the save screen - taking in the final timer
 function printSaveScreen(finalTimer) {
 
+    //set up element for display and attach the correct event listener
     clearElement(quizCard);
     quizCard.addEventListener('click', generalListener)    
 
+    //Create all elements to be displayed
     let titleContent = document.createElement('h2');
     let initialsInput = document.createElement('input');
     let inputLabel = document.createElement('label');
     let restartButton = document.createElement('button');
     let saveButton = document.createElement('button');
 
+    //Setup element attributes and classes
     initialsInput.setAttribute('id', 'initials-input');
     initialsInput.setAttribute('type', 'text');
 
@@ -118,6 +135,7 @@ function printSaveScreen(finalTimer) {
     saveButton.textContent = 'Save';
     inputLabel.textContent = 'Enter your initials here: ';
 
+    //If the player did not lose then display their score in remaining time
     if (finalTimer > 0) {
         titleContent.textContent = `Congratulations, you set a time of ${finalTimer} seconds! Save your score with your initials: `;
         quizCard.appendChild(titleContent);
@@ -126,46 +144,65 @@ function printSaveScreen(finalTimer) {
         quizCard.appendChild(document.createElement('br'))
         quizCard.appendChild(saveButton);
     } else {
+        //if the player did not complete the quiz in the time allowed, print the fail screen
         titleContent.textContent = `You did not complete the quiz within the time allowed. Please try again!`
         quizCard.appendChild(titleContent);
     }
+
+    //always append the restart button
     quizCard.appendChild(restartButton);
 
 
 }
 
+
+//validate the save process to ensure that users can only save once and with a valid name
 function validateSave() {
     let initials = document.querySelector("#initials-input")
 
-    if (!!document.querySelector('#save-notification')) { //If element exists
+    //If the save notification element exists then select it in the case of a player attempting to save with no name and then saving again
+    if (!!document.querySelector('#save-notification')) { 
         var saveStatus = document.querySelector('#save-notification');
     }
-    else { //if element does not exist, create it
+    else { 
+        //if this element does not exist, create it
         var saveStatus = document.createElement('h3');
         quizCard.appendChild(document.createElement('br'));
         saveStatus.setAttribute('id', 'save-notification')
         quizCard.appendChild(saveStatus);
     }
 
+    //if input is empty then fail and report to the user
     if (initials.value === '') {
-        saveStatus.classList.remove('successful');
+        if (saveStatus.classList.contains('successful')) 
+            saveStatus.classList.remove('successful');
+
         saveStatus.classList.add('unsuccessful');
         saveStatus.textContent = "Please enter a valid name";
 
-    } else if (gSaved) {
-        saveStatus.classList.remove('successful');
+    } 
+    //if user has already saved their score
+    else if (gSaved) {
+        if (saveStatus.classList.contains('successful')) 
+            saveStatus.classList.remove('successful');
+
         saveStatus.classList.add('unsuccessful');
         saveStatus.textContent = 'You have already saved your score!';
 
-    } else { //If all correct, perform save
+    }
+    //If all correct, perform save 
+    else { 
         let currentScore = {
             name: initials.value,
             score: gTimer,
         }
-        saveStatus.classList.remove('unsuccessful');
+        if (saveStatus.classList.contains('unsuccessful')) 
+            saveStatus.classList.remove('unsuccessful');
+
         saveStatus.classList.add('successful');
         saveStatus.textContent = 'Data saved successfully';
-        gSaved = true; // set global saved state to true
+        document.querySelector('#save-button').classList.add('answered');
+        gSaved = true; // set global saved state to true to prevent additional saves
         saveScores(currentScore);
     }
 
@@ -176,6 +213,7 @@ function validateSave() {
 function saveScores(currentScore) {
     let existingScores = localStorage.getItem('scores');
     let scores = [];
+    //if scores exist on local storage, append new score, else just add to the scores array
     if (existingScores !== null) {
         scores = JSON.parse(existingScores);
         scores.push(currentScore);
@@ -198,6 +236,7 @@ function startQuiz() {
 
     // console.table(questions);
 
+    //add event listener for quiz buttons
     quizCard.addEventListener('click', quizListener)
 
     //Quiz listener function definition - Nested to have access to variables required to perform quiz specific actions. 
@@ -235,22 +274,24 @@ function startQuiz() {
     let gameLoop = setInterval(() => {
 
 
-
+        //make timer red if less than 10 seconds remaining
         if (gTimer < 10 && !timerDisplay.classList.contains('timer-low')) {
             timerDisplay.classList.add('timer-low');
         }
 
+        //if timer has run out, end game
         if (gTimer === 0) {
             clearInterval(gameLoop);
+            quizCard.removeEventListener('click', quizListener);
             printSaveScreen(gTimer);
-            quizCard.removeEventListener('click', quizListener)
-            quizCard.addEventListener('click', generalListener)
         }
+        //if question has been answered
         else if (gAnswered) {
-
+            //reset global answered state and increment the index value
             gAnswered = false;
             questionIndex++;
 
+            //if the index is greater than or equal to the length of the array then end game, otherwise print question
             if (questionIndex > questions.length - 1) {
                 clearInterval(gameLoop);
                 quizCard.removeEventListener('click', quizListener)
@@ -260,6 +301,7 @@ function startQuiz() {
             }
 
         }
+        //if nothing happened this loop, decrement the timer and update the display
         else {
             gTimer--;
             updateTimerDisplay(gTimer);
@@ -301,7 +343,7 @@ function clearConditionalClasses() {
     }
 }
 
-// initialise the 
+// initialise the page
 function init() {
     quizCard.addEventListener('click', generalListener);
     clearConditionalClasses();
