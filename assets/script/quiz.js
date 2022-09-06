@@ -43,6 +43,7 @@ function selectQuestions(amount) {
     }
 
     for (let i = 0; i < amount; i++) {
+        //choose an index for the question 
         questionIndex = Math.floor(Math.random() * questions.length);
 
         selectedQuestions.push(questions[questionIndex])
@@ -212,16 +213,16 @@ function startQuiz() {
             }
     
             let output = document.createElement('div');
-            quizCard.appendChild(output);
+            outputDisplay.appendChild(output);
     
             if (parseInt(questions[questionIndex].correctIndex) === parseInt(answerIndex)) {
                 output.innerHTML = `<br> <hr> <h3 class='successful'>Correct!</h3>`;
-                setTimeout(()=> {clearElement(output)}, 1000);
+                setTimeout(()=> {clearElement(outputDisplay)}, 1000);
             } else {
                 output.innerHTML = `<br> <hr> <h3 class='unsuccessful'>Wrong!</h3>`;
                 gTimer -= 10;
                 updateTimerDisplay(gTimer);
-                setTimeout(()=> {clearElement(output)}, 1000);
+                setTimeout(()=> {clearElement(outputDisplay)}, 1000);
     
             }
         }
@@ -317,7 +318,7 @@ var gTimer = 60;
 //element selectors
 var quizCard = document.querySelector('#quiz-card');
 var timerDisplay = document.querySelector('.timer-text');
-var output = document.querySelector('#output-section');
+var outputDisplay = document.querySelector('#output-section');
 
 
 //Run init function
