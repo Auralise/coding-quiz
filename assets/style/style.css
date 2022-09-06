@@ -29,6 +29,24 @@ h1 {
 
 }
 
+h2 {
+    font-size: 150%;
+    margin: 0.5em 0;
+}
+
+h3 {
+    margin: 0.5em 0;
+}
+
+#score-table li {
+    padding: 0.3em;
+    background-color:  rgb(236, 120, 236);
+}
+
+#score-table li:nth-child(even){
+    background-color: rgb(238, 163, 238);
+}
+
 /* Anchor Styles - Standard, visited and hover */
 a {
     color: var(--link-text-color);
@@ -99,6 +117,7 @@ button:hover {
 
 .standard-button {
     padding: 5px;
+    margin: 5px;
     background-color: var(--button-color);
     color: var(--button-text-color);
     border-radius: 8px;
@@ -111,6 +130,19 @@ button:hover {
 
 .wrong {
     background-color: var(--button-color-wrong);
+}
+
+.successful {
+    color: var(--button-color-correct);
+}
+
+.unsuccessful {
+    color: var(--button-color-wrong);
+}
+
+/* if question has been answered */
+.answered { 
+    opacity: 0.5;
 }
 
 /* link buttons */
@@ -140,10 +172,16 @@ footer {
     list-style: none;
 }
 
-.display-card .quiz-list>li {
-    
+
+/* Utility classes */
+.hidden {
+    visibility: hidden;
 }
+
+
+
 
 #score-table {
     margin: 1em 0;
 }
+
