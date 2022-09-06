@@ -27,8 +27,8 @@ function updateTimerDisplay(timerValue){
 
 //select a random set of questions from the available options
 function selectQuestions(amount) {
-    //Make an array of all possible questions
-    let questions = quiz.questions;
+    //create a deep copy of all possible questions
+    let questions = JSON.parse(JSON.stringify(quiz.questions));
 
     //declare variables to be used in loop
     let questionIndex;
@@ -39,10 +39,11 @@ function selectQuestions(amount) {
     if (parseInt(amount) > parseInt(questions.length)) {
         repeatsAllowed = true;
         console.warn('Not enough questions. Allowing repeats');
+        console.table(quiz.questions);
     }
 
     for (let i = 0; i < amount; i++) {
-        questionIndex = Math.floor(Math.random() * quiz.questions.length);
+        questionIndex = Math.floor(Math.random() * questions.length);
 
         selectedQuestions.push(questions[questionIndex])
 
