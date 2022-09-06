@@ -15,11 +15,12 @@ function resetQuizScreen() {
         runs out!<br>GOOD LUCK!!!</p>
     <button id="start-button" class="standard-button">Click to Begin!</button>`;
 
-
+    updateTimerDisplay(gTimer);
 
     gSaved = false; //reset global saved state
 }
 
+//Update the value displayed in the timer
 function updateTimerDisplay(timerValue){
     timerDisplay.textContent = `Time Remaining: ${timerValue}`;
 }
@@ -34,6 +35,7 @@ function selectQuestions(amount) {
     let selectedQuestions = [];
     let repeatsAllowed = false;
 
+    //if input question list is not long enough, repeat questions to provide the requested amount
     if (parseInt(amount) > parseInt(questions.length)) {
         repeatsAllowed = true;
         console.warn('Not enough questions. Allowing repeats');
@@ -190,12 +192,14 @@ function startQuiz() {
     //select questions from database/collection
     let questions = selectQuestions(5);
     let questionIndex = 0;
-    // let answerIndex = -1;
+    let answerIndex = 0;
 
-    console.table(questions);
+    // console.table(questions);
 
     quizCard.addEventListener('click', quizListener)
 
+    //Quiz listener function definition - Nested to have access to variables required to perform quiz specific actions. 
+    // This has been defined as a function specifically to allow for the removal of this listener once it is no longer required. 
     function quizListener(event) {
         if (event.target.matches('.answer') && !gAnswered) {
             gAnswered = true;
@@ -215,6 +219,7 @@ function startQuiz() {
             } else {
                 output.innerHTML = `<br> <hr> <h3 class='unsuccessful'>Wrong!</h3>`;
                 gTimer -= 10;
+                updateTimerDisplay(gTimer);
                 setTimeout(()=> {clearElement(output)}, 1000);
     
             }
@@ -268,16 +273,16 @@ function startQuiz() {
 
 
 
-//Function for general event listener
+//Function for general event listener - This is for meta functions such as starting the quiz and saving/restarting
 function generalListener(event) {
-        console.log(event);
+        // console.log(event);
         if (event.target.matches('#start-button')) {
-            console.log("start button pressed");
             startQuiz();
             quizCard.removeEventListener('click', generalListener)
         }
 
         if (event.target.matches('#restart-button')) {
+            gTimer = 60;
             resetQuizScreen();
             init();
         }
@@ -294,6 +299,7 @@ function clearConditionalClasses() {
     }
 }
 
+// initialise the 
 function init() {
     quizCard.addEventListener('click', generalListener);
     clearConditionalClasses();
@@ -301,20 +307,29 @@ function init() {
 }
 
 // game states
-var gAnswered = false;
-var gSaved = false;
+var gAnswered = false; // question is answered
+var gSaved = false; // score has been saved
 
 //global timer
 var gTimer = 60;
 
+//element selectors
 var quizCard = document.querySelector('#quiz-card');
 var timerDisplay = document.querySelector('.timer-text');
 var output = document.querySelector('#output-section');
 
+
+//Run init function
 init();
 
 
-// quiz questions - To be replaced by a data fetch or some equivalent 
+
+
+
+
+
+
+// quiz questions - To be replaced by a data fetch or some equivalent once we learn this. 
 var quiz = {
     questions:[
        {
